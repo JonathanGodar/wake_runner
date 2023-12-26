@@ -1,0 +1,17 @@
+[[wakes]]
+name = "minecraft"
+command = "java"
+arguments = ["jar", "--nogui"]
+working_directory = "~/minecraft/"
+
+
+[[wakes]]
+name = "ssh"
+command = "ssh-once"
+working_directory = "~"
+
+[[wakes]]
+name="ls"
+command = "sh ls"
+arguments = ["-la"]
+working_directory = "/home/jonathan/"

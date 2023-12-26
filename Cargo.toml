@@ -1,0 +1,23 @@
+[package]
+name = "wake_runner"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "runner"
+path="src/runner/main.rs"
+
+
+[dependencies]
+axum = { version = "0.7.2", features = ["macros"] }
+ipnetwork = "0.20.0"
+listenfd = "1.0.1"
+mac_address = "1.1.5"
+network-interface = "1.1.1"
+serde = { version = "1.0.193", features = ["derive", "serde_derive"] }
+serde_json = "1.0.108"
+sqlx = { version = "0.7.3", features = ["runtime-tokio", "sqlite"] }
+tokio = { version = "1.35.1", features = ["net", "macros", "rt-multi-thread", "process", "io-util"] }
+toml = "0.8.8"
+uuid = { version = "1.6.1", features = ["v4"] }

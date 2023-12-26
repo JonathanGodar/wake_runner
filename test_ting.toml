@@ -1,0 +1,4 @@
+[commands.minecraft]
+command = "Hello world"
+working_directory = "~/minecraft/"
+arguments = ["jar", "--nogui"]
