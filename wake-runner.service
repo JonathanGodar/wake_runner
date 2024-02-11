@@ -1,0 +1,9 @@
+[Unit]
+Description=Hejsvenjs
+
+[Service]
+ExecStart=/home/jonathan/programming/wake_runner/target/debug/runner
+WorkingDirectory=/home/jonathan/programming/wake_runner/
+
+[Install]
+WantedBy=multi-user.target

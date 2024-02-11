@@ -1,8 +1,9 @@
 [[wakes]]
 name = "minecraft"
-command = "java"
-arguments = ["jar", "--nogui"]
-working_directory = "~/minecraft/"
+command = "sh"
+arguments = ["-c", "firefox"]
+# arguments = ["jar", "--nogui"]
+working_directory = "/home/jonathan/"
 
 
 [[wakes]]
@@ -15,3 +16,8 @@ name="ls"
 command = "sh ls"
 arguments = ["-la"]
 working_directory = "/home/jonathan/"
+
+[[wakes]]
+name="sleep"
+command = "sleep"
+arguments=["10"]

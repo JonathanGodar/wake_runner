@@ -15,9 +15,13 @@ ipnetwork = "0.20.0"
 listenfd = "1.0.1"
 mac_address = "1.1.5"
 network-interface = "1.1.1"
+notify = "6.1.1"
+reqwest = { version = "0.11.23", features = ["json"] }
 serde = { version = "1.0.193", features = ["derive", "serde_derive"] }
 serde_json = "1.0.108"
 sqlx = { version = "0.7.3", features = ["runtime-tokio", "sqlite"] }
-tokio = { version = "1.35.1", features = ["net", "macros", "rt-multi-thread", "process", "io-util"] }
+system_shutdown = "4.0.1"
+tokio = { version = "1.35.1", features = ["net", "macros", "rt-multi-thread", "process", "io-util", "sync"] }
+tokio-util = "0.7.10"
 toml = "0.8.8"
 uuid = { version = "1.6.1", features = ["v4"] }
