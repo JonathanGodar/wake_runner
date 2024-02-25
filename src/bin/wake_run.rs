@@ -1,18 +1,14 @@
-use axum::extract::FromRef;
-use mac_address::MacAddress;
-use network_interface::{NetworkInterface, NetworkInterfaceConfig};
-use serde::{Deserialize, Serialize};
-use serde_json::json;
 use std::{
     error::Error,
-    net::{Ipv4Addr, SocketAddr, SocketAddrV4},
+    net::{SocketAddr, SocketAddrV4},
     time::Duration,
 };
-use tokio::{fs, join, net::UdpSocket, select, task::JoinSet};
-use tokio_util::sync::CancellationToken;
-use wake_on_lan::get_broadcastable_v4_interfaces;
 
-mod wake_on_lan;
+use mac_address::MacAddress;
+use serde::{Deserialize, Serialize};
+use tokio::{net::UdpSocket, select, task::JoinSet};
+use tokio_util::sync::CancellationToken;
+use wake_runner::net::{interfaces::get_broadcastable_v4_interfaces, wake_on_lan};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Config {
@@ -44,7 +40,7 @@ async fn send_wake(mac_address: MacAddress, wake: &str) -> Option<()> {
 async fn send_wake_to_uri(uri: &str, wake: &str) {
     let http = reqwest::Client::new();
     let result = http
-        .post(format!("{uri}/wake_run"))
+        .post(format!("{uri}/wake"))
         .json(&WakeRunBody {
             name: wake.to_string(),
         })
@@ -110,17 +106,11 @@ async fn ping_for_wake_runner_address(
         None
     };
 
-    // tokio::spawn(async move {
-    //     tokio::time::sleep(timeout_duration);
-    //     cancel.cancel();
-    // });
-
     let maybe_socket = select! {
         _ = tokio::time::sleep(timeout_duration) => None,
         resp = udp_response => resp
     };
 
-    // cancel.cancel();
     maybe_socket
 }
 

@@ -1,11 +1,19 @@
-use notify::{EventKind, RecursiveMode, Watcher};
-use std::{io::Read, path::Path, sync::Arc};
+use std::{path::Path, sync::Arc};
+
+use notify::{RecursiveMode, Watcher};
 use tokio::{
     process::Command,
     select,
-    sync::{broadcast, watch, Notify},
+    sync::{watch, Notify},
 };
 use tokio_util::sync::CancellationToken;
+
+pub async fn get_active_user_count() -> Result<usize, std::io::Error> {
+    let users_command_output = Command::new("users").output().await?;
+    let users_output = String::from_utf8(users_command_output.stdout).unwrap();
+    let user_count = users_output.split_whitespace().count();
+    Ok(user_count)
+}
 
 pub async fn watch_active_user_count(
     stop: CancellationToken,
@@ -56,11 +64,4 @@ fn create_user_count_update_notifier(notify: Arc<Notify>) -> impl Watcher {
         .unwrap();
 
     watcher
-}
-
-pub async fn get_active_user_count() -> Result<usize, std::io::Error> {
-    let users_command_output = Command::new("users").output().await?;
-    let users_output = String::from_utf8(users_command_output.stdout).unwrap();
-    let user_count = users_output.split_whitespace().count();
-    Ok(user_count)
 }
