@@ -42,7 +42,7 @@ pub async fn init_config() -> Config {
             PathBuf::from("./runner_config.toml")
         },
         general_config_dir,
-    ]);
+    ]).unwrap();
 
     println!("{:?}", CONFIG_PATHS);
 
